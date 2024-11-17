@@ -1,7 +1,7 @@
 # Job\_Search README
 Author: McKay Osborne, 11/17/2024
 
-`## Project Title:
+## Project Title:
 Job\_Search
 
 ## Project Description:
