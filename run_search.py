@@ -8,14 +8,21 @@ import pandas as pd
 import sys
 
 # Define the job keywords you want to search for
-job_keywords = ["Data Scientist"]
-df=pd.read_csv(sys.argv[1],header=None, index_col=0)
+job_title_file=open(sys.argv[1], 'r')
+job_keywords=[]
+for title in job_title_file:
+    job_keywords.append(title.strip())
+job_title_file.close()
 
+print(f"Job Keywords are {job_keywords}")
+
+df=pd.read_csv(sys.argv[2],header=None, index_col=0)
 # Define the list of career page URLs to scrape
 career_urls=dict(zip(df[1].keys(),df[1].values))
 
 # Helper function to search for jobs on a single website
 def check_job_openings(url, job_keywords):
+    print(job_keywords)
     try:
         # Send a request to the website
         response = requests.get(url)
@@ -28,12 +35,13 @@ def check_job_openings(url, job_keywords):
         page_text = soup.get_text().lower()
 
         # Search for job keywords in the page text
+        return_messages=[]
         for keyword in job_keywords:
+            print(f"Searching for {keyword}")
             if re.search(keyword.lower(), page_text):
-                return f"Found '{keyword}' position at {url}"
-        
+                return_messages.append(f"Found '{keyword}' position at {url}")
         # If no job title found
-        return f"No positions found at {url}"
+        return return_messages
     
     except requests.exceptions.RequestException as e:
         return f"Failed to access {url}: {e}"
@@ -41,8 +49,9 @@ def check_job_openings(url, job_keywords):
 # Iterate over each company and check for job openings
 results = []
 for company, url in career_urls.items():
+    print(f'\n Searching for positions at {company} career page.')
     result = check_job_openings(url, job_keywords)
-    print(f"{company}: {result}")
+    print(f"{company}: {len(result)}")
     results.append({"Company": company, "Result": result})
     
     # Add delay to avoid being blocked

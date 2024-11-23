@@ -1,0 +1,7 @@
+History for Job Search
+
+Version
+
+v1.0.0 
+Added base of code/scraper that informs user if a company is hiring a specified position or not. Default job title to search is 'Data Scientist'.
+
