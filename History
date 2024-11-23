@@ -1,6 +1,9 @@
 History for Job Search
 
-Version
+Versions:
+
+v1.1.0
+Added new argument (job titles text file path) and prints out number of jobs found on each career page.
 
 v1.0.0 
 Added base of code/scraper that informs user if a company is hiring a specified position or not. Default job title to search is 'Data Scientist'.
